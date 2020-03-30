@@ -1,0 +1,37 @@
+
+Use .apply to send a column of every row to a function
+
+def money_to_float(money_str):
+    return float(money_str.replace("$","").replace(",",""))
+
+df['SAL-RATE'].apply(money_to_float)
+
+Use .apply with axis=1 to send every single row to a function
+
+# Use the height and width to calculate the area
+def calculate_area(row):
+    return row['height'] * row['width']
+
+rectangles_df.apply(calculate_area, axis=1)
+
+rectangles_df['area'] = rectangles_df.apply(calculate_area, axis=1)
+rectangles_df
+
+
+df.columns = [col.strip() for col in df.columns]  # remove all blanks in headers
+
+col_types = { 'code': 'str' }
+agencies_df = pd.read_csv("../cleaned-agencies.csv", na_values=["-999"], dtype=col_types, true_values='Y', false_values='N')
+agencies_df.head()
+
+
+# it auto-merges cat_idx in our original dataframe with cat_idx in categories_df
+# it auto-merges dt_idx in our original dataframe with dt_idx in data_types_df
+# it auto-merges geo_idx in our original dataframe with geo_idx in geo_levels_df
+# it auto-merges per_idx in our original dataframe with per_idx in periods_df
+df = data_df.merge(categories_df).merge(data_types_df).merge(geo_levels_df).merge(periods_df)
+# We only want to look at the total number of homes sold across entire the united states
+df = df[(df['cat_code'] == 'SOLD') & (df['geo_code'] == 'US') & (df['dt_code'] == 'TOTAL')]
+
+
+df = df.drop(['per_idx', 'cat_idx', 'dt_idx', 'et_idx', 'geo_idx'], axis=1)
