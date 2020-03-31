@@ -35,3 +35,36 @@ df = df[(df['cat_code'] == 'SOLD') & (df['geo_code'] == 'US') & (df['dt_code'] =
 
 
 df = df.drop(['per_idx', 'cat_idx', 'dt_idx', 'et_idx', 'geo_idx'], axis=1)
+
+
+for i in data:
+    print(i+": "+str(data[i].unique()))      # 查看某一列的唯一值
+    
+    
+data.isnull()                # 查看整个数据集的空值
+data['department'].isnull()  # 查看某一列的空值
+
+data.isnull().sum().sort_values(ascending=False)
+
+pandas.DataFrame.fillna（value = None，method = None，inplace = False）
+
+for i in data:                                    # 遍历数据集中的每一列
+    if pd.api.types.is_object_dtype(data[i]):     # 如果是object类型的数据，则执行下方代码
+        data[i]=data[i].str.strip()               # 去除空格
+data['origin'].unique()                           # 验证一下
+
+data['money'].replace(-10,np.nan,inplace=True)                    # 将负值替换为空值
+data['money'].replace(np.nan,data['money'].mean(),inplace=True)   # 将空值替换为均值
+
+data1 = data[data.origin != 'American'] #去掉origin为American的行
+
+data2=data[(data != 'Japan').all(1)]    #去掉所有包含Japan的行    不等于Japan的行为真，则返回
+
+data['origin'].drop_duplicates()      # 默认删除后面出现的重复值，即保留第一次出现的重复值
+data['origin'].drop_duplicates(keep='last')   # 删除前面出现的重复值，即保留最后一次出现的重复值
+
+data['id'].astype('str')    # 将id列的类型转换为字符串类型。
+
+data.rename(columns={'id':'ID', 'origin':'产地'})     # 将id列改为ID，将origin改为产地。
+
+
