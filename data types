@@ -1,0 +1,6 @@
+select_dtypes
+
+If data preprocessing has to be done in Python, then this command would save you some time. After reading in a table, the default data types for each column could be bool, int64, float64, object, category, timedelta64, or datetime64. You can first check the distribution by
+df.dtypes.value_counts()
+to know all possible data types of your dataframe, then do
+df.select_dtypes(include=['float64', 'int64'])
