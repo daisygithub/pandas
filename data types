@@ -22,3 +22,25 @@ D. df['c'].value_counts().reset_index().sort_values(by='index') :
 
 show the stats sorted by distinct values in column ‘c’ instead of counts.
 (Update 2019.4.18 — for D. above, Hao Yang points out a simpler way without .reset_index(): df['c'].value_counts().sort_index())
+
+
+isna vs isnull and notna vs notnull
+The isna and isnull methods both determine whether each value in the DataFrame is missing or not. 
+The result will always be a DataFrame (or Series) of all boolean values.
+These methods are exactly the same. We say that one is an alias of the other. 
+There is no need for both of them in the library. The isna method was added more recently because the characters na are found 
+in other missing value methods such as dropna and fillna. 
+Confusingly, Pandas uses NaN, None, and NaT as missing value representations and not NA.
+notna and notnull are aliases of each other as well and simply return the opposite of isna. There's no need for both of them.
+Let’s verify that isna and isnull are aliases.
+
+
+Let’s verify that isna and isnull are aliases.
+>>> college_isna = college.isna()
+>>> college_isnull = college.isnull()
+>>> college_isna.equals(college_isnull)
+True
+I only use isna and notna
+I use the methods that end in na to match the names of the other missing value methods dropna and fillna.
+You can also avoid ever using notna since Pandas provides the inversion operator, ~ to invert boolean DataFrames.
+Guidance: Use only isna and notna
