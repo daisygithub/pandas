@@ -68,3 +68,5 @@ data['id'].astype('str')    # 将id列的类型转换为字符串类型。
 data.rename(columns={'id':'ID', 'origin':'产地'})     # 将id列改为ID，将origin改为产地。
 
 
+isna vs isnull and notna vs notnull
+
